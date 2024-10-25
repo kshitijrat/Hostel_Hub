@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Profile - Hostel Management System</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <!-- Favicon Icon -->
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/128/4525/4525040.png" type="image/png">
+    <link rel="stylesheet" th:href="@{../profile.css}"> <!-- Custom CSS -->
+</head>
+
+<style>
+    body {
+        background-color: rgb(0, 0, 4);
+        color: #ffffff;
+        font-family: 'Arial', sans-serif;
+    }
+
+    .navbar {
+        background-color: rgb(0, 0, 4);
+        z-index: 1000;
+    }
+
+    .navbar-brand {
+        color: #ffffff;
+    }
+
+    .navbar-nav .nav-link {
+        color: #ffffff;
+        margin-right: 15px;
+    }
+
+
+    .navbar-nav .nav-link:hover {
+        text-decoration: underline;
+    }
+
+
+
+    .main-content {
+        margin-top: 20px;
+        padding: 20px;
+    }
+
+    .profile-card {
+        border: none;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        background-color: #1e1e1e;
+        color: #ffffff;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .profile-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    .profile-card img {
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        /* object-fit: cover; */
+        height: 320px;
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .card-title {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+
+    .card-text {
+        font-size: 1.1rem;
+    }
+
+    .additional-info-card {
+        border: none;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        background-color: #1e1e1e;
+        color: #ffffff;
+    }
+
+    .card-header {
+        background-color: #121212;
+        color: #ffffff;
+        font-weight: bold;
+        font-size: 1.2rem;
+    }
+
+    .list-group-item {
+        background-color: #1e1e1e;
+        color: #ffffff;
+        border: none;
+        border-bottom: 1px solid #333;
+    }
+
+    .list-group-item span {
+        font-weight: bold;
+        color: #8b3f3f;
+    }
+
+    .table {
+        background-color: #1e1e1e;
+        color: gray;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        border-radius: 15px;
+        overflow: hidden;
+        border-collapse: collapse;
+    }
+
+    .table th,
+    .table td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #333;
+    }
+
+    .table th {
+        background-color: #121212;
+        color: #ffffff;
+    }
+
+    .table tr:nth-child(even) {
+        background-color: #5c5959;
+    }
+
+    .table tr:last-child td {
+        border-bottom: none;
+    }
+
+    .card-header {
+        background-color: #121212;
+        color: #ffffff;
+        font-weight: bold;
+        font-size: 1.2rem;
+    }
+
+    h6 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+
+    .card-body h6 {
+        margin-bottom: 10px;
+    }
+
+    .footer-custom {
+        position: relative;
+        background-color: #0c0c0c;
+        /* Dark background */
+        color: #e0e0e0;
+        border-top: 1px solid #333;
+        /* Light text color */
+        padding: 20px 0;
+    }
+
+    .footer-custom a {
+        color: #e0e0e0;
+        /* Light text color for links */
+    }
+
+    .footer-custom a:hover {
+        /* Highlight color on hover */
+        text-decoration: underline;
+    }
+
+    .contact-icons i {
+        margin: 0 10px;
+        font-size: 24px;
+        color: #e0e0e0;
+        /* Light color */
+    }
+
+    .contact-icons i:hover {
+        color: #a44b3c;
+        /* Highlight color on hover */
+    }
+</style>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="#">Stay Manager</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/dashboard">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/profile">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/settings">Settings</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-toggle="modal" data-target="#logoutModal">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card profile-card">
+                        <img src="https://cdn-icons-gif.flaticon.com/14164/14164933.gif" class="card-img-top"
+                            alt="Profile Picture">
+                        <div class="card-body">
+                            <h5 class="card-title">Personal Information</h5>
+                            <p class="card-text"><strong>Name:</strong> <span th:text="${user.userName}"></span></p>
+                            <p class="card-text"><strong>Email:</strong> <span th:text="${user.userEmail}"></span></p>
+                            <p class="card-text"><strong>Phone:</strong> <span th:text="${user.userPhone}"></span></p>
+                            <p class="card-text"><strong>Role:</strong> <span th:text="${user.roles}"></span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-8">
+                    <div class="card additional-info-card">
+                        <div class="card-header">
+                            Additional Information
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h6>Recent Activities</h6>
+                                    <ul class="list-group">
+                                        <li class="list-group-item">Checked into Room <span
+                                                th:text="${user.roomNumber}"></span> on <span
+                                                th:text="${user.activityDate1}"></span></li>
+                                        <li class="list-group-item">Updated Profile Information on <span
+                                                th:text="${user.activityDate2}"></span></li>
+                                        <li class="list-group-item">Made Booking for Room <span
+                                                th:text="${user.upcomingBookingId}"></span> on <span
+                                                th:text="${user.activityDate3}"></span></li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6>Contact Information</h6>
+                                    <p><strong>Address:</strong> <span>Chandwasa</span></p>
+                                    <p><strong>Emergency Contact:</strong> <span>+91-78473848374</span></p>
+                                    <p><strong>Preferred Contact Method:</strong> <span>Mobile</span></p>
+                                </div>
+                            </div>
+                            <h6>Payment History</h6>
+                            <!-- chart canvas -->
+                            <canvas id="paymentChart"></canvas>
+                            <table class="table mt-3">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Payment ID</th>
+                                        <th>Date</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="payment, iterStat : ${payments}">
+                                        <td th:text="${iterStat.index + 1}"></td>
+                                        <td th:text="${payment.paymentId}"></td>
+                                        <td th:text="${payment.paymentDate}"></td>
+                                        <td th:text="${payment.amount}"></td>
+                                        <td th:text="${payment.status}"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Logout Confirmation Modal -->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-dark" id="logoutModalLabel">Confirm Logout</h5>
+                    <button type="button" class="close text-dark" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-dark">
+                    Are you sure you want to log out?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <a href="/logout" class="btn btn-danger">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer-custom text-center">
+        <p>&copy; 2024 Stay Manager. All rights reserved.</p>
+        <p>
+            <a href="#about">About Us</a> |
+            <a href="#">Privacy Policy</a> |
+            <a href="#">Contact Us</a>
+        </p>
+        <div class="contact-icons">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- chart script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const ctx = document.getElementById('paymentChart').getContext('2d');
+            const paymentDates = '[[${paymentDates}]]'.split(',');
+            const paymentAmounts = '[[${paymentAmounts}]]'.split(',').map(Number);
+
+            new Chart(ctx, {
+                type: 'bar', // Changed from 'line' to 'bar'
+                data: {
+                    labels: paymentDates,
+                    datasets: [{
+                        label: 'Payment Amount',
+                        data: paymentAmounts,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+
+
+
+    <!-- logout modal script  -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var deleteForm = document.getElementById('deleteForm');
+            var confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+
+            // Event listener for the delete confirmation button
+            confirmDeleteBtn.addEventListener('click', function () {
+                var form = deleteForm;
+                form.submit();
+            });
+
+            // Event listener to set the form action dynamically
+            $('#deleteModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var action = button.data('action');
+                var form = document.getElementById('deleteForm');
+                form.action = action;
+            });
+        });
+    </script>
+</body>
+
+
+</html>

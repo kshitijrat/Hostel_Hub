@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Hostel Management</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <style>
+        body {
+            background-color: rgb(0, 0, 4);
+            /* Dark background */
+            color: #e0e0e0;
+            /* Light text color */
+            margin: 0;
+            padding: 0;
+            padding-top: 56px;
+            font-family: Arial, sans-serif;
+        }
+
+        .navbar-custom {
+            background-color: rgb(0, 0, 4);
+            /* Darker background for navbar */
+        }
+
+        .navbar-custom .navbar-brand,
+        .navbar-custom .navbar-nav .nav-link {
+            color: #e0e0e0;
+            /* Light text color */
+        }
+
+        .navbar-custom .navbar-nav .nav-link:hover {
+            color: #e0e0e0;
+            text-decoration: underline;
+            /* Highlight color */
+        }
+
+        .sidebar {
+            height: 100vh;
+            background-color: rgb(0, 0, 4);
+            padding: 20px;
+            width: 250px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-right: 1px solid #333;
+            position: fixed;
+            top: 56px;
+            bottom: 0;
+            left: 0;
+            overflow-y: auto;
+            transition: all 0.3s;
+        }
+
+        .sidebar .nav-link {
+            color: #e0e0e0;
+            /* Light text color */
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .sidebar .nav-link:hover {
+            color: #a44b3c;
+            text-decoration: underline;
+            /* Highlight color */
+        }
+
+        .sidebar .nav-link.active {
+            background-color: #a44b3c;
+            /* Light background for active link */
+            color: #ffffff;
+            /* Darker text color */
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        .sidebar .nav-link.active:hover {
+            background-color: #d0d0d0;
+            color: #a44b3c;
+            /* Slightly darker background on hover */
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+
+        .header {
+            background-color: #1e1e1e;
+            /* Dark gradient */
+            color: #e0e0e0;
+            /* Light text color */
+            text-align: center;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 1px 1px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+            animation: fadeInDown 1s;
+        }
+
+        .table-responsive {
+            margin-bottom: 20px;
+        }
+
+        .btn-primary {
+            background-color: #2294ff;
+            /* Bright color */
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #0c87fa;
+            /* Darker shade on hover */
+        }
+
+        .btn-secondary{
+            background-color: rgb(7, 170, 7);
+        }
+
+        .footer-custom {
+            position: relative;
+            background-color: #0c0c0c;
+            /* Dark background */
+            color: #e0e0e0;
+            border-top:1px solid #333;
+            /* Light text color */
+            padding: 20px 0;
+        }
+
+        .footer-custom a {
+            color: #e0e0e0;
+            /* Light text color for links */
+        }
+
+        .footer-custom a:hover {
+            text-decoration: underline;
+            /* Highlight color on hover */
+        }
+
+        .contact-icons i {
+            margin: 0 10px;
+            font-size: 24px;
+            color: #e0e0e0;
+            /* Light color */
+        }
+
+        .contact-icons i:hover {
+            color: #a44b3c;
+            /* Highlight color on hover */
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .sidebar .nav-link {
+            animation: fadeInLeft 0.5s;
+        }
+
+        .header h1 {
+            animation: fadeInDown 1s;
+        }
+
+        .no-requests {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #e0e0e0;
+            /* Light text color */
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .form-control {
+            background-color: transparent;
+        }
+
+        #profilediv {
+            margin-top: 70px;
+            position: relative;
+            /* Ensure the container has relative positioning */
+        }
+
+        #profileImage {
+            width: 250px;
+            height: 250px;
+            background-color: #ffffff;
+            position: relative;
+            /* Optional, for clarity */
+        }
+
+        .edit-icon {
+            position: absolute;
+            bottom: 0;
+            /* Aligns the icon to the bottom edge */
+            right: 0;
+            margin-bottom: 110px;
+            margin-right: 95px;
+            /* Aligns the icon to the right edge */
+            font-size: 24px;
+            color: #e0e0e0;
+            cursor: pointer;
+        }
+
+        .edit-icon:hover {
+            color: #a44b3c;
+        }
+    </style>
+
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
+        <a class="navbar-brand" href="#">Stay Manager</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link" href="/dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/profile"><i class="fas fa-user"></i> Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="/settings"><i class="fas fa-cogs"></i> Settings</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/room_report"><i class="fas fa-file-alt"></i> Room Report</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <div class="header">
+            <h1>Account Settings</h1>
+        </div>
+
+        <!-- Profile Image -->
+        <div class="row mb-4">
+            <div class="col-md-4" id="profilediv">
+                <center>
+                    <img id="profileImage" th:src="@{../images/profile.png}" alt="Profile Image"
+                        class="img-fluid rounded-circle">
+                    <input type="file" id="fileInput" accept="image/*" style="display: none;"
+                        onchange="loadFile(event)">
+                    <i class="fas fa-edit edit-icon" onclick="document.getElementById('fileInput').click();"></i>
+                </center>
+            </div>
+            <div class="col-md-8">
+                <h3>Account Information</h3>
+                <form>
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" class="form-control" th:value="${user.userName}" id="username"
+                            placeholder="Enter your username">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email address</label>
+                        <input type="email" class="form-control" th:value="${user.userEmail}" id="email"
+                            placeholder="Enter your email">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Current Password</label>
+                        <input type="password" class="form-control" id="password"
+                            placeholder="Enter your current password">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">New Password</label>
+                        <input type="password" class="form-control" id="password" placeholder="Enter new password">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Additional Features -->
+        <div class="additional-features">
+            <div class="feature-card">
+                <h5>Enable Two-Factor Authentication</h5>
+                <p>Enhance your account security by enabling two-factor authentication.</p>
+                <button class="btn btn-secondary">Enable</button>
+            </div>
+            <div class="feature-card">
+                <h5>Set Email Preferences</h5>
+                <p>Configure how and when you receive email notifications.</p>
+                <button class="btn btn-secondary">Configure</button>
+            </div>
+            <div class="feature-card">
+                <h5>Manage Connected Devices</h5>
+                <p>View and manage devices connected to your account.</p>
+                <button class="btn btn-secondary">Manage</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer-custom text-center">
+        <p>&copy; 2024 Hostel Management System. All rights reserved.</p>
+        <div class="contact-icons">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+    </footer>
+
+    <script>
+        var loadFile = function (event) {
+            var image = document.getElementById('profileImage');
+            image.src = URL.createObjectURL(event.target.files[0]);
+            // Implement AJAX call to save the image file
+        };
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

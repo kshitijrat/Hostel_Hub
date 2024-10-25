@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Complaints - Hostel Management System</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: rgb(0, 0, 4);
+            color: #f5f5f5;
+        }
+
+        .complaint-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #f5f5f5;
+            border: none;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .complaint-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .complaint-header {
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 10px;
+            border-radius: 10px 10px 0 0;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .complaint-body {
+            padding: 15px;
+        }
+
+        .view-details-btn {
+            background-color: #007bff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            transition: background-color 0.3s ease;
+        }
+
+        .view-details-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .navbar-custom {
+            background-color: rgb(0, 0, 4);
+        }
+
+        .navbar-custom .navbar-brand,
+        .navbar-custom .navbar-nav .nav-link {
+            color: #f5f5f5;
+        }
+
+        table,
+        th,
+        tr,
+        td {
+            color: #ffff;
+            border: 0.004px solid;
+        }
+
+
+        .footer-custom {
+            background-color: rgb(0, 0, 4);
+            color: #f5f5f5;
+            padding: 20px 0;
+            border-top: 0.2px solid gray;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+        <a class="navbar-brand" href="#">Stay Manager Admin</a>
+    </nav>
+
+    <div class="container my-5">
+        <h2 class="text-center">Student Complaints</h2>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="complaint-list">
+                    <div th:if="${complaints.size() == 0}">
+                        <h1 class="text-center">There are no complaints!</h1>
+                    </div>
+                    <div th:each="complaint, cnt : ${complaints}" class="complaint-card card">
+                        <form action="/admin/complaintrequest" method="post">
+                            <div class="complaint-header">
+                                Complaint #<span th:text="${cnt.index + 1}"></span>
+                            </div>
+
+                            <div class="complaint-body">
+                                <table class="table table-striped table-custom">
+                                    <tbody>
+                                        <tr>
+                                            <th>Student Name:</th>
+                                            <td th:text="${complaint.user.userName}"></td>
+                                            <input type="text" hidden readonly name="complaintId" th:value="${complaint.id}">
+                                            <th>Email:</th>
+                                            <td th:text="${complaint.user.userEmail}"></td>
+                                            <input type="email" readonly hidden name="email" th:value="${complaint.user.userEmail}">
+                                            <th>Hostel No:</th>
+                                            <td th:text="${complaint.user.hostelNumber}"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Subject:</th>
+                                            <td th:text="${complaint.cmpType}"></td>
+                                            <th>Date:</th>
+                                            <td th:text="${complaint.date}"></td>
+                                            <th>Status:</th>
+                                            <td th:text="${complaint.status}"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Description:</th>
+                                            <td colspan="6" th:text="${complaint.cmpMess}"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <th colspan="6" class="text-left">
+                                                <button type="submit" class="view-details-btn btn btn-info">Accept</button>
+                                            </th>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer-custom text-center">
+        <div class="container">
+            <p>&copy; 2024 Hostel Management System</p>
+        </div>
+    </footer>
+</body>
+
+</html>

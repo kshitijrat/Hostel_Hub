@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complaint Dashboard - Stay Manager</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Link to Font Awesome for icons -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: rgb(0, 0, 4);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background-color: rgb(0, 0, 4);
+            padding: 15px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative; /* Position relative for absolute elements inside */
+        }
+
+        .container {
+            display: flex;
+            
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+            gap: 20px;
+        }
+
+        .hostel-info {
+            flex: 1;
+            background-color: rgb(112, 112, 112);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .hostel-info img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .complaint-form {
+            flex: 1;
+            background-color: rgb(112, 112, 112);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+
+        select, input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #004aad;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #003080;
+        }
+
+        .user-info {
+            background-color: #f0f2f5;
+            padding: 15px;
+            color: gray;
+            border-radius: 5px;
+            position: absolute; /* Absolute positioning */
+            top: 70px; /* Adjusted for navbar height */
+            right: 20px;
+            width: 250px; /* Fixed width */
+            display: none; /* Initially hidden */
+            z-index: 100; /* Ensure it appears above other elements */
+        }
+
+        .profile:hover .user-info {
+            display: block; /* Show on hover */
+        }
+
+        .footer {
+            text-align: center;
+            padding: 10px 0;
+            background-color: #0c0c0c;
+            color: white;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .footer_div a{
+            color: white;
+            padding: 5px;
+            text-decoration: none;
+        }
+
+        .footer_div a i:hover{
+            color: #a44b3c;
+        }
+
+        .footer_div a:hover{
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .user-info {
+                position: relative; /* Reset positioning for small screens */
+                margin-bottom: 20px; /* Add margin for spacing */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar Section -->
+    <div class="navbar">
+        <div class="brand">Stay Manager</div>
+        <div class="profile">
+            <a href="/profile"><img src="https://cdn-icons-png.flaticon.com/128/18083/18083477.png" alt="User Avatar" style="border-radius: 50%; max-width: 50px; max-height: 50px; vertical-align: middle; cursor: pointer;"></a>
+            <div class="user-info">
+                <p><strong>Name:</strong> <span th:text="${user.userName}">User</span></p>
+                <p><strong>Email:</strong> <span th:text="${user.userEmail}">John Doe</span></p>
+                <p><strong>Hostel Number:</strong> <span th:text="${user.hostelNumber}">101</span></p>
+                <p><strong>Room Number:</strong> <span th:text="${user.roomNumber}">201</span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Information Section -->
+    <div class="container">
+        <div class="hostel-info">
+            <h2>About Our Hostel</h2>
+            <img src="https://aadindia.com/uploads/projects/151428288502.jpg" alt="Hostel Image">
+            <p>Welcome to our hostel! We provide a comfortable and safe environment for all our residents. Our facilities include study rooms, recreational areas, and 24/7 security. We aim to create a community where students can thrive and make lifelong memories.</p>
+        </div>
+
+        <div class="complaint-form">
+            <h2>Write Your Complaint</h2>
+
+            <form action="/submit_complaint" method="POST">
+                <input type="email" name="email" th:value="${user.userEmail}" hidden>
+                <label for="issue-type">Issue Type</label>
+                <select id="issue-type" name="cmpType" required>
+                    <option value="" disabled selected>Select an issue</option>
+                    <option value="maintenance">Maintenance</option>
+                    <option value="cleanliness">Cleanliness</option>
+                    <option value="water_supply">Water Supply</option>
+                    <option value="electricity_supply">Electricity Supply</option>
+                    <option value="other">Other</option>
+                </select>
+
+                <label for="description">Description of the Issue</label>
+                <textarea id="description" style="width: 600px; min-width: 600px; max-width: 600px;" name="description" rows="3" placeholder="Describe the issue in detail..." required></textarea>
+
+                <button type="submit">Submit Complaint</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer_div">
+            <p>&copy; 2024 Stay Manager. All rights reserved.</p>
+            <p>
+                <a href="#about">About Us</a> |
+                <a href="#">Privacy Policy</a> |
+                <a href="#">Contact Us</a>
+            </p>
+            <div class="contact-icons">
+                <a href="https://www.facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

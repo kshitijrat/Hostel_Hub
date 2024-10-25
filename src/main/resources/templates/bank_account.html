@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="https://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Bank Account</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: rgb(0, 0, 4);
+            color: #e0e0e0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar-custom {
+            background-color: rgb(0, 0, 4);
+            z-index: 1000;
+        }
+
+        .navbar-custom .navbar-brand,
+        .navbar-custom .navbar-nav .nav-link {
+            color: #e0e0e0;
+        }
+
+        .navbar-custom .navbar-nav .nav-link:hover {
+            color: #ff6347;
+        }
+
+        .main-content {
+            margin-top: 80px;
+            padding: 20px;
+        }
+
+        .card {
+            border-radius: 15px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            background-color: rgb(0, 0, 4);
+            border: 1px solid #e0e0e0;
+            color: #e0e0e0;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .card-text {
+            font-size: 1.2rem;
+        }
+
+        .form-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+        }
+
+        .btn-custom {
+            background-color: #333;
+            color: #e0e0e0;
+            border: none;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .btn-custom:hover {
+            background-color: #ff6347;
+            transform: scale(1.05);
+        }
+
+        .footer {
+            background-color: #0c0c0c;
+            /* Darker footer background */
+            color: #e0e0e0;
+            padding: 20px 0;
+            text-align: center;
+            font: normal;
+            width: 100%;
+            border-top: 1px solid #333;
+            position: relative;
+        }
+
+        .footer a {
+            color: #e0e0e0;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .contact-icons i {
+            margin: 0 10px;
+            font-size: 24px;
+            color: #e0e0e0;
+        }
+
+        .contact-icons i:hover {
+            color: #a44b3c;
+        }
+
+        .message-box {
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .error {
+            background-color: #2c2c2c;
+            color: #f8d7da;
+            border: 1px solid #f5c6cb;
+        }
+
+        .success {
+            background-color: #2c2c2c;
+            color: #d4edda;
+            border: 1px solid #c3e6cb;
+        }
+
+        .message-box img {
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+        }
+
+        .bank-account-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .bank-account-table th, .bank-account-table td {
+            padding: 15px;
+            text-align: left;
+            color: #e0e0e0;
+            border-bottom: 1px solid #333;
+        }
+
+        .bank-account-table th {
+            background-color: #333;
+            color: #ff6347;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .bank-account-table tr:hover {
+            background-color: #333;
+        }
+
+        .btn-delete {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s, transform 0.3s;
+            padding: 5px 10px;
+        }
+
+        .btn-delete:hover {
+            background-color: #c82333;
+            transform: scale(1.05);
+        }
+
+        .no-requests {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #e0e0e0;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .no-requests i {
+            font-size: 3rem;
+            color: #ff6347;
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            background-color: transparent;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
+        <a class="navbar-brand" href="#">Stay Manager</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container">
+            <div th:if="${error}" class="message-box error">
+                <img src="https://cdn-icons-png.flaticon.com/512/680/680542.png" alt="Error Icon">
+                <span>Card Already Exists!</span>
+            </div>
+            <div th:if="${success}" class="message-box success">
+                <img src="https://cdn-icons-png.flaticon.com/512/190/190411.png" alt="Success Icon">
+                <span>Card Added Successfully!</span>
+            </div>
+            <div class="container-inner animate__animated animate__fadeIn">
+                <h1 class="mb-4 text-center text-light">Add Bank Account</h1>
+                <div class="card p-4 mb-4">
+                    <form action="#" th:action="@{/addbankaccount}" th:object="${bankAccount}" method="post">
+                        <label>Card Number:</label>
+                        <input type="text" th:field="*{cardNumber}" required />
+                        <br/>
+                        
+                        <label>Card Holder Name:</label>
+                        <input type="text" th:field="*{cardHolderName}" required />
+                        <br/>
+                        
+                        <label>Expiry Date:</label>
+                        <input type="text" th:field="*{expiryDate}" required placeholder="MM/YY"/>
+                        <br/>
+                        
+                        <label>CVV:</label>
+                        <input type="text" th:field="*{cvv}" required />
+                        <br/>
+                        
+                        <label>PIN:</label>
+                        <input type="password" th:field="*{pin}" required />
+                        <br/>
+                
+                        <button type="submit">Add Bank Account</button>
+                    </form>
+                    
+                    <div th:if="${error}" th:text="${error}"></div>
+                    <div th:if="${success}" th:text="${success}"></div>
+                </div>
+
+                <h2 class="text-center mb-4">All Bank Accounts</h2>
+
+                <div th:if="${#lists.isEmpty(bankAccounts)}">
+                    <div class="no-requests">
+                        <i class="fas fa-wallet"></i>
+                        No Bank Accounts Found
+                    </div>
+                </div>
+                <div th:unless="${#lists.isEmpty(bankAccounts)}">
+                    <table class="table bank-account-table animate__animated animate__fadeIn">
+                        <thead>
+                            <tr>
+                                <th scope="col">Account Id</th>
+                                <th scope="col">Account Holder Name</th>
+                                <th scope="col">Expiry Date</th>
+                                <th scope="col">CVV</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="bankAccount : ${bankAccounts}">
+                                <td th:text="${bankAccount.id}">1234 5678 9012 3456</td>
+                                <td th:text="${bankAccount.cardHolderName}">John Doe</td>
+                                <td th:text="${bankAccount.expiryDate}">12/34</td>
+                                <td th:text="${bankAccount.cvv}">123</td>
+                                <td>
+                                    <form th:action="@{/deletebankaccount/{id}(id=${bankAccount.id})}" method="post">
+                                        <button type="submit" class="btn-delete"><i class="fas fa-trash-alt"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 Stay Manager. All rights reserved.</p>
+        <p>
+            <a href="#about">About Us</a> |
+            <a href="#contact">Contact Us</a> |
+            <a href="#privacy">Privacy Policy</a>
+        </p>
+        <div class="contact-icons">
+            <a href="https://github.com/Kshitij-Ratnawat" target="_blank"><i class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/kshitij-ratnawat" target="_blank"><i class="fab fa-linkedin"></i></a>
+            <a href="mailto:youremail@example.com"><i class="fas fa-envelope"></i></a>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+</body>
+
+</html>

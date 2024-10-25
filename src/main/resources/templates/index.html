@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Hostel Management System</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <!-- Favicon Icon -->
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/128/4525/4525040.png" type="image/png">
+
+    <style>
+        body {
+            background-color: rgb(0, 0, 4);
+            /* Dark navy blue */
+            margin: 0;
+            padding: 0;
+            color: #f5f5f5;
+            /* White smoke */
+            overflow-x: hidden;
+            /* Prevent horizontal scroll */
+        }
+
+        .navbar-custom {
+            background-color: rgb(0, 0, 4);
+        }
+
+        .navbar-custom .navbar-brand,
+        .navbar-custom .navbar-nav .nav-link {
+            color: #f5f5f5;
+            /* White smoke */
+        }
+
+        .navbar-custom .navbar-nav .nav-link:hover {
+            /* text-decoration: underline; */
+            /* Custom color for hover */
+        }
+
+        .jumbotron-custom {
+            background: url('https://images.pexels.com/photos/276724/pexels-photo-276724.jpeg?auto=compress&cs=tinysrgb&w=1600') no-repeat center center;
+            background-color: rgb(0, 0, 4);
+            /* Dark navy blue */
+            background-size: cover;
+            color: white;
+            height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            text-align: center;
+            overflow-x: hidden;
+            /* Prevent horizontal scrolling */
+        }
+
+        .jumbotron-content {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .jumbotron-content .left-content,
+        .jumbotron-content .right-content {
+            width: 45%;
+        }
+
+        .jumbotron-content h1 {
+            font-size: 2.5rem;
+        }
+
+        .jumbotron-content p {
+            font-size: 1.25rem;
+            margin-top: 1rem;
+        }
+
+        .col-md-4 {
+            border-bottom: 1px solid #f5f5f5;
+            /* White smoke */
+            display: grid;
+        }
+
+        .btn-primary {
+            background-color: #a44b3c;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #343a40;
+            /* Dark gray color for hover */
+        }
+
+        .icon-custom {
+            color: #a44b3c;
+            /* Icon color */
+            font-size: 50px;
+        }
+
+        .footer-custom {
+            background-color: rgb(0, 0, 4);
+            color: #f5f5f5;
+            padding: 20px 0;
+            border-top: 0.2px solid gray;
+            border-bottom: 0.2px solid gray;
+        }
+
+        .footer-custom a {
+            color: #f5f5f5;
+        }
+
+        .footer-custom a:hover {
+            text-decoration: underline;
+        }
+
+        .contact-icons i {
+            margin: 0 10px;
+            font-size: 24px;
+            color: #a44b3c;
+        }
+
+        .contact-icons i:hover {
+            color: #ffffff;
+        }
+
+        .section-heading {
+            color: #a44b3c;
+            /* Section heading color */
+        }
+
+        @media (max-width: 768px) {
+            .jumbotron-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .jumbotron-content .left-content,
+            .jumbotron-content .right-content {
+                width: 100%;
+            }
+
+            .jumbotron-content h1 {
+                font-size: 2rem;
+            }
+
+            .jumbotron-content p {
+                font-size: 1rem;
+            }
+
+            /* Ensure responsive margins */
+            body {
+                margin: 0;
+                padding: 0;
+            }
+        }
+
+        .dropdown-menu {
+            background-color: #f0f1f1;
+            border: 1px solid;
+            padding: 0;
+
+        }
+
+        .dropdown-item {
+            color: black;
+        }
+
+        .dropdown-item:hover {
+            background-color: #c0bfbe;
+            color: #ffffff;
+        }
+    </style>
+
+
+  
+    
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+        <a class="navbar-brand" href="#">Stay Manager</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav" style="margin-right: 20px;">
+            <ul class="navbar-nav ml-auto">
+                <!-- New Menu dropdown with proper width -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        Menu
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="min-width: auto;">
+                        <a class="dropdown-item" href="/gallery">Gallery</a>
+                    </div>
+                    
+                </li>
+            </ul>
+        </div>
+    </nav>
+    
+    
+
+    <div class="jumbotron jumbotron-fluid jumbotron-custom">
+        <div class="container jumbotron-content">
+            <div class="left-content">
+                <h1 class="display-4">Stay Manager</h1>
+                <p style="color: white;">Your one-stop solution for managing hostel activities efficiently.</p>
+            </div>
+            <div class="right-content">
+                <p class="lead" style="color: white;">Effortlessly manage room assignments, ensure secure environments, and provide quality
+                    food services.</p>
+                <a href="/login" class="btn btn-primary btn-lg mt-3">
+                    <span>Continue to Login</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container my-5">
+        <div class="row text-center">
+            <div class="col-md-4 mb-4">
+                <i class="fas fa-bed icon-custom"></i>
+                <h3 class="mt-3 section-heading">Comfortable Rooms</h3>
+                <p>Experience the best living conditions with our well-furnished rooms.</p>
+            </div>
+            <div class="col-md-4 mb-4">
+                <i class="fas fa-shield-alt icon-custom"></i>
+                <h3 class="mt-3 section-heading">Secure Environment</h3>
+                <p>Safety and security of our residents are our top priority.</p>
+            </div>
+            <div class="col-md-4 mb-4">
+                <i class="fas fa-utensils icon-custom"></i>
+                <h3 class="mt-3 section-heading">Quality Food</h3>
+                <p>Enjoy nutritious and delicious meals prepared by our expert chefs.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer-custom text-center">
+        <div class="container">
+            <p>&copy; 2024 Hostel Management System</p>
+            <p>
+                <a href="/about">About Us</a> |
+                <a href="/privacy">Privacy Policy</a> |
+                <a href="#">Contact Us</a>
+            </p>
+            <div class="contact-icons">
+                <a href="https://www.facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="mailto:info@hostelmanagement.com"><i class="fas fa-envelope"></i></a>
+                <a href="tel:+916985745235"><i class="fas fa-phone-alt"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- <section id="about" class="py-5">
+        <div class="container">
+            <h2 class="text-center section-heading">About Us</h2>
+            <p class="text-center">Hostel Management System is dedicated to providing the best living conditions and
+                services for students. Our goal is to make hostel management efficient, secure, and enjoyable for
+                everyone.</p>
+        </div>
+    </section> -->
+
+    <!-- Smooth scroll JS for a better experience -->
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

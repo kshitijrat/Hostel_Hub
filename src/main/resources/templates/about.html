@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>About Us - Hostel Management System</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/128/4525/4525040.png" type="image/png">
+    <style>
+        body {
+            background-color: rgb(0, 0, 4);
+            margin: 0;
+            padding: 0;
+            color: #f5f5f5;
+            overflow-x: hidden;
+        }
+
+        .navbar-custom {
+            background-color: rgb(0, 0, 4);
+        }
+
+        .navbar-custom .navbar-brand,
+        .navbar-custom .navbar-nav .nav-link {
+            color: #f5f5f5;
+        }
+
+        .section-heading {
+            color: #a44b3c;
+        }
+
+        .footer-custom {
+            background-color: rgb(0, 0, 4);
+            color: #f5f5f5;
+            padding: 20px 0;
+            border-top: 0.2px solid gray;
+            border-bottom: 0.2px solid gray;
+        }
+
+        .contact-icons i {
+            margin: 0 10px;
+            font-size: 24px;
+            color: #a44b3c;
+        }
+
+        .contact-icons i:hover {
+            color: #ffffff;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+        <a class="navbar-brand" href="#">Stay Manager</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav" style="margin-right: 20px;">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/contact">Contact Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/privacy">Privacy Policy</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <h2 class="text-center section-heading">About Us</h2>
+        <p class="text-center">Hostel Management System is dedicated to providing the best living conditions and
+            services for students. Our goal is to make hostel management efficient, secure, and enjoyable for
+            everyone.</p>
+        <p class="text-center">We strive to create a comfortable and safe environment where students can focus on their studies and enjoy a vibrant community life.</p>
+    </div>
+
+    <footer class="footer-custom text-center">
+        <div class="container">
+            <p>&copy; 2024 Hostel Management System</p>
+            <div class="contact-icons">
+                <a href="https://www.facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="mailto:info@hostelmanagement.com"><i class="fas fa-envelope"></i></a>
+                <a href="tel:+916985745235"><i class="fas fa-phone-alt"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

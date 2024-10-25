@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="https://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pending Request Approval Form</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: rgb(0, 0, 4);
+            /* Dark background */
+            color: #ffffff;
+            /* White text */
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar-custom {
+            background-color: rgb(0, 0, 4);
+            /* Dark background */
+            z-index: 1000;
+        }
+
+        .navbar-custom .navbar-brand,
+        .navbar-custom .navbar-nav .nav-link {
+            color: #ffffff;
+            /* White text */
+        }
+
+        .navbar-custom .navbar-nav .nav-link:hover {
+            color: #a44b3c;
+            /* Highlight color */
+        }
+
+        .main-content {
+            margin-top: 80px;
+            padding: 20px;
+        }
+
+        .card {
+            border-radius: 15px;
+            background-color: #1e1e1e;
+            /* Dark card background */
+            color: #ffffff;
+            /* White text */
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .card-text {
+            font-size: 1.2rem;
+        }
+
+        .oval {
+            display: inline-block;
+            background-color: #333;
+            /* Dark background for oval */
+            color: #ffffff;
+            /* White text */
+            padding: 10px 20px;
+            border-radius: 50px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            font-weight: bold;
+        }
+
+        .btn-custom {
+            background-color: #a44b3c;
+            /* Highlight color */
+            color: #ffffff;
+            /* White text */
+            border: none;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .btn-custom:hover {
+            background-color: #d0846f;
+            /* Lighter highlight color */
+            transform: scale(1.05);
+        }
+
+        .form-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+        }
+
+        .table th,
+        .table td {
+            vertical-align: middle;
+            color: #ffffff;
+            /* White text in table */
+        }
+
+        .container {
+            background: url('https://images.pexels.com/photos/13569906/pexels-photo-13569906.jpeg?auto=compress&cs=tinysrgb&w=600') no-repeat center center;
+            background-size: cover;
+            padding: 30px;
+            border-radius: 15px;
+        }
+
+        .container-inner {
+            background-color: rgba(0, 0, 0, 0.8);
+            /* Darker overlay */
+            padding: 20px;
+            border-radius: 15px;
+        }
+
+        .footer {
+            background-color: #0c0c0c;
+            /* background-color:#141414; */
+            color: #ffffff;
+            text-align: center;
+            padding: 10px;
+            position: relative;
+            width: 100%;
+            bottom: 0;
+            border-top: 1px solid #333;
+        }
+
+        .footer a {
+            color: #ffffff;
+            text-decoration: none;
+
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .contact-icons i {
+            margin: 0 10px;
+            font-size: 24px;
+            color: #ffffff;
+        }
+
+        .contact-icons i:hover {
+            color: #a44b3c;
+        }
+
+        .no-requests {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ffffff;
+            /* White text */
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .no-requests i {
+            font-size: 3rem;
+            color: #d0846f;
+            /* Highlight color */
+            margin-bottom: 20px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
+        <a class="navbar-brand" href="#">Stay Manager</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container">
+            <div class="container-inner animate__animated animate__fadeIn">
+                <h1 class="mb-4 text-center text-white">Pending Request Approval</h1>
+                <div th:if="${userList.isEmpty()}">
+                    <div class="no-requests">
+                        <i class="fas fa-exclamation-circle animate__animated animate__bounce"></i>
+                        <p>There are no pending requests</p>
+                    </div>
+                </div>
+                <div th:each="user : ${userList}">
+                    <form action="/admin/approverequest" method="post" class="card p-4 mb-4">
+                        <table class="table table-borderless">
+                            <tbody>
+                                <tr>
+                                    <th scope="row"><img src="https://cdn-icons-png.flaticon.com/512/306/306473.png"
+                                            class="form-icon" alt="ID Icon">Id:</th>
+                                    <td><span th:text="${user.id}"></span></td>
+
+                                    <th scope="row"><img src="https://cdn-icons-png.flaticon.com/512/561/561127.png"
+                                            class="form-icon" alt="Email Icon">Email:</th>
+                                    <td><span th:text="${user.userEmail}"></span></td>
+                                    <input type="email" readonly hidden name="email" th:value="${user.userEmail}">
+
+                                    <th scope="row"><img src="https://cdn-icons-png.flaticon.com/512/15/15874.png"
+                                            class="form-icon" alt="Phone Icon">Phone:</th>
+                                    <td><span th:text="${user.userPhone}"></span></td>
+                                </tr>
+
+                                <tr>
+                                    <th scope="row"><img src="https://cdn-icons-png.flaticon.com/512/3114/3114883.png"
+                                            class="form-icon" alt="Room Number Icon">Room Number:</th>
+                                    <td><span th:text="${user.roomNumber}"></span></td>
+                                    <th scope="row"><img src="https://cdn-icons-png.flaticon.com/512/181/181474.png"
+                                        class="form-icon" alt="Room Type Icon">Room Type:</th>
+                                <td><span th:text="${user.roomType}"></span></td>
+                                <th scope="row"><img src="https://cdn-icons-png.flaticon.com/512/1041/1041916.png"
+                                    class="form-icon" alt="Status Icon">Status:</th>
+                            <td>Pending</td>
+                                </tr>
+                               
+                            </tbody>
+                        </table>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-custom"><i class="fas fa-check-circle"></i> Approve
+                                Request</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 StaySmart. All rights reserved.</p>
+        <p>Contact us: <span class="contact-icons">
+                <a href="#"><i class="fas fa-envelope"></i></a>
+                <a href="#"><i class="fas fa-phone"></i></a>
+                <a href="#"><i class="fas fa-map-marker-alt"></i></a>
+            </span></p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
+
+
+
+
+
+<!-- <form action="/admin/approverequest" method="post" class="card p-4 mb-4"></form> -->

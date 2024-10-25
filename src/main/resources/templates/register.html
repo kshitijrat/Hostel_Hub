@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Hostel Management System</title>
+    <!-- Favicon Icon -->
+    <link rel="icon" href="https://www.flaticon.com/svg/static/icons/svg/888/888879.svg" type="image/svg+xml">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            background-color: #f5f5f5;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .hero-section {
+            position: relative;
+            background-image: url('https://images.pexels.com/photos/1181411/pexels-photo-1181411.jpeg');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            filter: blur(6px);
+            z-index: -1;
+        }
+
+        .hero-content {
+            position: relative;
+            color: white;
+            max-width: 500px;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-content h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .hero-content p {
+            font-size: 1rem;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #e0e0e0;
+        }
+
+        .btn-primary {
+            background-color: #d9534f;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .btn-primary:hover {
+            background-color: #c9302c;
+        }
+
+        .form-group label {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #dcdcdc;
+        }
+
+        .form-group input {
+            font-size: 1rem;
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+            background: #ffffff;
+        }
+
+        .form-group input:focus {
+            border-color: #d9534f;
+            box-shadow: 0 0 0 0.2rem rgba(217, 83, 79, 0.25);
+        }
+
+        .form-check-label {
+            color: #dcdcdc;
+        }
+
+        .form-check-input:checked ~ .form-check-label::before {
+            background-color: #d9534f;
+        }
+
+        .form-check-input {
+            margin-top: 0.3rem;
+        }
+
+        .form-check-input:focus {
+            box-shadow: none;
+        }
+
+        .error, .success {
+            font-size: 0.875rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero-content {
+                padding: 20px;
+                width: 90%;
+            }
+
+            .hero-content h2 {
+                font-size: 1.5rem;
+            }
+
+            .hero-content p {
+                font-size: 0.875rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <section class="hero-section">
+        <div class="hero-content">
+            <h2 class="text-center mb-4">Sign Up for Stay Manager</h2>
+            <p class="text-center mb-4">Streamline your hostel management with StaySmart. Effortlessly track room allocations, handle bookings, and stay organized—all in one intuitive platform.</p>
+            <form method="post" th:action="@{/register}" id="registerForm">
+                <div class="form-group">
+                    <label for="userEmail"><i class="fas fa-envelope"></i> Email</label>
+                    <input type="email" class="form-control" id="userEmail" name="userEmail" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="userPassword"><i class="fas fa-lock"></i> Password</label>
+                    <input type="password" class="form-control" id="userPassword" name="userPassword" placeholder="Enter your password" required>
+                </div>
+                <div class="form-group">
+                    <label for="retypePassword"><i class="fas fa-lock"></i> Re-type Password</label>
+                    <input type="password" class="form-control" id="retypePassword" placeholder="Re-type your password" required>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="isAdmin" name="role">
+                    <label for="isAdmin" class="form-check-label">Register as a staff</label>
+                </div>
+                <div id="adminId-container" class="form-group" style="display: none;">
+                    <label for="adminId">Staff ID:</label>
+                    <input type="number" class="form-control" name="adminId" id="adminId" placeholder="Enter ID">
+                    <div id="staffIdError" class="text-danger mt-2" style="display:none;">Invalid Staff ID</div>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" name="term_condition" id="term_condition" required>
+                    <label class="form-check-label" for="term_condition">
+                        Agree to <a href="/terms_of_services" class="text-primary">Terms & Conditions</a>
+                    </label>
+                </div>                
+                <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-user-plus"></i> Register</button>
+                <div th:if="${param.error}" class="error mt-2 text-danger">
+                    Registration failed. Please try again.
+                </div>
+                <div th:if="${param.success}" class="success mt-2 text-success">
+                    Registration successful. Please <a href="/login" class="text-primary">Login here</a>.
+                </div>
+            </form>
+            <p class="mt-3 text-center">Already have an account? <a href="/login" class="text-primary">Login here</a></p>
+        </div>
+    </section>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const isAdminCheckbox = document.getElementById('isAdmin');
+            const adminIdContainer = document.getElementById('adminId-container');
+            const adminIdInput = document.getElementById('adminId');
+            const staffIdError = document.getElementById('staffIdError');
+            const registerForm = document.getElementById('registerForm');
+
+            const validStaffIds = [101, 102, 103, 104]; // Define valid staff IDs
+
+            function toggleAdminIdField() {
+                if (isAdminCheckbox.checked) {
+                    adminIdContainer.style.display = 'block';
+                } else {
+                    adminIdContainer.style.display = 'none';
+                    staffIdError.style.display = 'none'; // Hide error when unchecked
+                }
+            }
+
+            // Add event listener to the checkbox
+            isAdminCheckbox.addEventListener('change', toggleAdminIdField);
+
+            // Initialize visibility based on current checkbox state
+            toggleAdminIdField();
+
+            // Form validation on submit
+            registerForm.addEventListener('submit', function (e) {
+                if (isAdminCheckbox.checked) {
+                    const staffId = parseInt(adminIdInput.value, 10);
+                    if (!validStaffIds.includes(staffId)) {
+                        staffIdError.style.display = 'block'; // Show error message
+                        e.preventDefault(); // Prevent form submission
+                    } else {
+                        staffIdError.style.display = 'none'; // Hide error if valid
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,19 @@
+body {
+    background: url('/static/images/finance.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #333;
+}
+
+.navbar {
+    margin-bottom: 20px;
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.form-control {
+    margin-bottom: 15px;
+}

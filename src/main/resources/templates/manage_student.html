@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Students - StaySmart</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        body {
+            font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            background-color: rgb(0, 0, 4);
+            color: #ffffff;
+        }
+
+        .navbar-custom {
+            background-color: rgb(0, 0, 4);
+            z-index: 1000;
+        }
+
+        .navbar-custom .navbar-brand,
+        .navbar-custom .navbar-nav .nav-link {
+            color: #ffffff;
+        }
+
+        .navbar-custom .navbar-nav .nav-link:hover {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+
+        .sidebar {
+            height: 100vh;
+            background-color: rgb(0, 0, 4);
+            padding: 20px;
+            width: 250px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-right: 1px solid #333;
+            position: fixed;
+            top: 56px;
+            bottom: 0;
+            left: 0;
+            overflow-y: auto;
+        }
+
+        .sidebar .nav-link {
+            color: #ffffff;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            padding: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .sidebar .nav-link:hover {
+            color: #a44b3c;
+            text-decoration: underline;
+        }
+
+        .sidebar .nav-link.active {
+            background-color: #a44b3c;
+        }
+
+        .sidebar .nav-link.active:hover {
+            background-color: #d0d0d0;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            margin-top: 40px;
+            padding: 20px;
+            color: #ffffff;
+        }
+
+        .card {
+            border-radius: 15px;
+            background-color: #1e1e1e;
+            color: #ffffff;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-header {
+            background-color: #a44b3c;
+            color: #ffffff;
+            font-weight: bold;
+        }
+
+        .table th,
+        .table td {
+            vertical-align: middle;
+            color: #ffffff;
+        }
+
+        .table-container {
+            max-height: 400px; /* Set a max height */
+            overflow-y: auto; 
+        }
+
+        .footer {
+            background-color: #0c0c0c;
+            color: #ffffff;
+            text-align: center;
+            padding: 10px;
+            position: relative;
+            width: 100%;
+            border-top: 1px solid #333;
+        }
+
+        .footer a {
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .contact-icons i {
+            margin: 0 10px;
+            font-size: 24px;
+            color: #ffffff;
+        }
+
+        .contact-icons i:hover {
+            color: #a44b3c;
+        }
+
+        .btn-custom {
+            background-color: #a44b3c;
+            color: #ffffff;
+            border: none;
+        }
+
+        .btn-custom:hover {
+            background-color: #8e3d2f;
+        }
+
+        .add-student-btn {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
+        <a class="navbar-brand" href="#">Stay Manager</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <div class="d-flex">
+        <nav class="sidebar p-3">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link" href="/dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/manage_student"><i class="fas fa-users"></i> Manage Students</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/manage_rooms"><i class="fas fa-bed"></i> Manage Rooms</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/manage_bookings"><i class="fas fa-calendar-alt"></i> Manage Bookings</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin_setting"><i class="fas fa-cogs"></i> Settings</a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content flex-fill">
+            <div class="container">
+                <h1 class="mb-4">Manage Students</h1>
+    
+                <div class="row">
+                    <div class="col-md-12 add-student-btn">
+                        <a href="/addstudent" class="btn btn-custom"><i class="fas fa-plus"></i> Add New Student</a>
+                    </div>
+                </div>
+    
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                Student List
+                            </div>
+                            <div class="card-body">
+                                <div class="table-container">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Phone</th>
+                                                <th>Room</th>
+                                                <!-- <th>Actions</th> -->
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Loop through students dynamically -->
+                                            <tr th:each="student, iterStat : ${students}">
+                                                <td th:text="${iterStat.index + 1}"></td>
+                                                <td th:text="${student.userName}"></td>
+                                                <td th:text="${student.userEmail}"></td>
+                                                <td th:text="${student.userPhone}"></td>
+                                                <td th:text="${student.roomNumber}"></td>
+                                                <!-- <td>
+                                                    <form action="@{/admin/editstudent/{id}(id=${student.id})}" method="post">
+                                                        <button type="submit" class="btn-delete"><i class="fas fa-edit"></i></button>
+                                                    </form>
+                                                    <form action="@{/admin/deletestudent/{id}(id=${student.id})}" method="post">
+                                                        <button type="submit" class="btn-delete"><i class="fas fa-trash-alt"></i></button>
+                                                    </form>                                                    
+                                                </td> -->
+                                            </tr>
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                            
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 StaySmart. All rights reserved.</p>
+        <p>Contact us: <span class="contact-icons">
+                <a href="#"><i class="fas fa-envelope"></i></a>
+                <a href="#"><i class="fas fa-phone"></i></a>
+                <a href="#"><i class="fas fa-map-marker-alt"></i></a>
+            </span></p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

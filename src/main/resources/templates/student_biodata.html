@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Student Biodata - Hostel Management System</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/128/4525/4525040.png" type="image/png">
+    <style>
+        body {
+            background-color: rgb(0, 0, 4);
+            color: #f5f5f5;
+        }
+        .navbar-custom {
+            background-color: rgb(0, 0, 4);
+        }
+        .footer-custom {
+            background-color: rgb(0, 0, 4);
+            padding: 20px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+        <a class="navbar-brand" href="#">Stay Manager</a>
+        <!-- Navbar Content -->
+    </nav>
+
+    <div class="container my-5">
+        <h2 class="text-center section-heading">Student Biodata</h2>
+        <div class="biodata-details">
+            <p><strong>Name:</strong> <span th:text="${student.userName}"></span></p>
+            <p><strong>Email:</strong> <span th:text="${student.userEmail}"></span></p>
+            <p><strong>Phone:</strong> <span th:text="${student.userPhone}"></span></p>
+            <!-- <p><strong>Booking ID:</strong> <span th:text="${student.bookingId}"></span></p> -->
+            <p><strong>Hostel:</strong> <span th:text="${student.hostelNumber}"></span></p>
+            <p><strong>Room Number:</strong> <span th:text="${student.roomNumber}"></span></p>
+            <p><strong>Room Status:</strong> <span th:text="${roomStatus}"></span></p>
+            <!-- Add other fields as necessary -->
+        </div>
+    </div>
+
+    <footer class="footer-custom text-center">
+        <div class="container">
+            <p>&copy; 2024 Hostel Management System</p>
+            <!-- Footer Content -->
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Hostels - Stay Manager</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+    <style>
+        body {
+            padding-top: 56px;
+            background-color: rgb(0, 0, 4);
+            color: #ffffff;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS';
+        }
+
+        .navbar {
+            background-color: rgb(0, 0, 4);
+            z-index: 1000;
+        }
+
+        .navbar-brand {
+            color: #ffffff !important;
+        }
+
+        .nav-link:hover {
+            text-decoration: underline;
+        }
+
+        .sidebar {
+            height: 100vh;
+            background-color: rgb(0, 0, 4);
+            padding: 20px;
+            width: 250px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-right: 1px solid #333;
+            position: fixed;
+            top: 56px;
+            left: -250px;
+            transition: left 0.3s ease;
+        }
+
+        .sidebar.open {
+            left: 0;
+        }
+
+        .sidebar .nav-link {
+            color: #ffffff;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            padding: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .sidebar .nav-link:hover {
+            color: #a44b3c;
+            text-decoration: underline;
+        }
+
+        .sidebar .nav-link.active {
+            background-color: #a44b3c;
+        }
+
+        .main-content {
+            margin-left: 0;
+            margin-top: 40px;
+            padding: 20px;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #a44b3c;
+            padding-bottom: 10px;
+            color: #a44b3c;
+        }
+
+        .info-box {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .info-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .info-icon {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: #ffffff;
+            margin-right: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .info-content {
+            display: flex;
+            align-items: center;
+        }
+
+        .btn-custom{
+            border: 2px solid;
+            color: whitesmoke;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+
+        .footer {
+            background-color: #0c0c0c;
+            color: #ffffff;
+            text-align: center;
+            padding: 10px;
+            border-top: 1px solid #333;
+        }
+
+        .footer a {
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .contact-icons i {
+            margin: 0 10px;
+            font-size: 24px;
+            color: #ffffff;
+        }
+
+        .contact-icons i:hover {
+            color: #a44b3c;
+        }
+
+        @media (max-width: 767.98px) {
+            .main-content {
+                margin-left: 0;
+            }
+
+            .sidebar {
+                width: 100%;
+                position: relative;
+                top: 0;
+                left: 0;
+                height: auto;
+                padding: 10px;
+                border-right: none;
+                box-shadow: none;
+            }
+
+            .info-box {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <a class="navbar-brand" href="#">Stay Manager</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <button class="btn btn-outline-light" id="sidebarToggle"><i class="fas fa-bars"></i></button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a style="color: white;" class="nav-link" href="#" data-toggle="modal" data-target="#logoutModal">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link" href="/dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/manage_student"><i class="fas fa-users"></i> Manage Students</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/manage_rooms"><i class="fas fa-bed"></i> Manage Rooms</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/manage_bookings"><i class="fas fa-calendar-alt"></i> Manage Bookings</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/manage_hostel"><i class="fas fa-calendar-alt"></i> Manage Hostel</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin_setting"><i class="fas fa-cogs"></i> Settings</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <h1 class="section-title">Manage Hostels</h1>
+
+            <!-- Hostels Information Section -->
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="info-box">
+                        <div class="info-content">
+                            <div class="info-icon">
+                                <i class="fas fa-building"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-1">Hostel 1</h5>
+                                <p>Capacity: 120 students</p>
+                                <p>Current occupancy: <span>15</span></p>
+                                <a href="" class="btn btn-custom">Manage</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- hostel 2 -->
+                <div class="col-md-4">
+                    <div class="info-box">
+                        <div class="info-content">
+                            <div class="info-icon">
+                                <i class="fas fa-building"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-1">Hostel 2</h5>
+                                <p>Capacity: 150 students</p>
+                                <p>Current occupancy: <span>300</span></p>
+                                <a href="" class="btn btn-custom">Manage</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- hostel 3 -->
+                <div class="col-md-4">
+                    <div class="info-box">
+                        <div class="info-content">
+                            <div class="info-icon">
+                                <i class="fas fa-building"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-1">Hostel 3</h5>
+                                <p>Capacity: 150 students</p>
+                                <p>Current occupancy: <span>300</span></p>
+                                <a href="" class="btn btn-custom">Manage</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- hostel 4 -->
+                <div class="col-md-4">
+                    <div class="info-box">
+                        <div class="info-content">
+                            <div class="info-icon">
+                                <i class="fas fa-building"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-1">Hostel 4</h5>
+                                <p>Capacity: 150 students</p>
+                                <p>Current occupancy: <span>300</span></p>
+                                <a href="" class="btn btn-custom">Manage</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- hostel 5 -->
+                <div class="col-md-4">
+                    <div class="info-box">
+                        <div class="info-content">
+                            <div class="info-icon">
+                                <i class="fas fa-building"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-1">Hostel 5</h5>
+                                <p>Capacity: 150 students</p>
+                                <p>Current occupancy: <span>300</span></p>
+                                <a href="" class="btn btn-custom">Manage</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- hostel 6 -->
+                <div class="col-md-4">
+                    <div class="info-box">
+                        <div class="info-content">
+                            <div class="info-icon">
+                                <i class="fas fa-building"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-1">Hostel 6</h5>
+                                <p>Capacity: 150 students</p>
+                                <p>Current occupancy: <span>300</span></p>
+                                <a href="" class="btn btn-custom">Manage</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- hostel 7 -->
+                <div class="col-md-4">
+                    <div class="info-box">
+                        <div class="info-content">
+                            <div class="info-icon">
+                                <i class="fas fa-building"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-1">Hostel 7</h5>
+                                <p>Capacity: 150 students</p>
+                                <p>Current occupancy: <span>300</span></p>
+                                <a href="" class="btn btn-custom">Manage</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- hostel 8 -->
+                <div class="col-md-4">
+                    <div class="info-box">
+                        <div class="info-content">
+                            <div class="info-icon">
+                                <i class="fas fa-building"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-1">Hostel 8</h5>
+                                <p>Capacity: 150 students</p>
+                                <p>Current occupancy: <span>300</span></p>
+                                <a href="" class="btn btn-custom">Manage</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- hostel 9 -->
+                <div class="col-md-4">
+                    <div class="info-box">
+                        <div class="info-content">
+                            <div class="info-icon">
+                                <i class="fas fa-building"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-1">Hostel 9</h5>
+                                <p>Capacity: 150 students</p>
+                                <p>Current occupancy: <span>300</span></p>
+                                <a href="" class="btn btn-custom">Manage</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- hostel 10 -->
+                <div class="col-md-4">
+                    <div class="info-box">
+                        <div class="info-content">
+                            <div class="info-icon">
+                                <i class="fas fa-building"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-1">Hostel 10</h5>
+                                <p>Capacity: 150 students</p>
+                                <p>Current occupancy: <span>300</span></p>
+                                <a href="" class="btn btn-custom">Manage</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Repeat similar blocks for remaining hostels -->
+            </div>
+
+            <!-- Recent Hostel Activities -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="info-box">
+                        <h5 class="mb-1">Recent Hostel Activities</h5>
+                        <table class="table table-striped" style="color: #ffffff;">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Activity</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Room allocation for Hostel 1 updated</td>
+                                    <td>October 22, 2024</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Maintenance work scheduled for Hostel 3</td>
+                                    <td>October 20, 2024</td>
+                                </tr>
+                                <!-- Add more rows as needed -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 Stay Manager. All rights reserved. | <a href="#">Privacy Policy</a></p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.getElementById('sidebarToggle').addEventListener('click', function () {
+            document.querySelector('.sidebar').classList.toggle('open');
+        });
+    </script>
+</body>
+
+</html>
