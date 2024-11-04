@@ -16,9 +16,7 @@
 5. **Auto Generate Report**
 
 ## How It Works
-1. **Admin Login**: Authenticate as admin to access features.
-2. **Room Allocation**: Manage room assignments per student.
-3. **Booking Management**: Track bookings and availability in real-time.
+- Administrators log in to manage room assignments, update resident records, and oversee stay operations. Staff and residents can access relevant information based on their roles, like checking room availability, submitting requests, and viewing billing details. The app's automated updates ensure all users are kept informed in real time, enhancing transparency and reducing administrative effort.
 
 ## Some Images
 - Index Page
