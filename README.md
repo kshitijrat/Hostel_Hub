@@ -18,6 +18,12 @@
 ## How It Works
 - Administrators log in to manage room assignments, update resident records, and oversee stay operations. Staff and residents can access relevant information based on their roles, like checking room availability, submitting requests, and viewing billing details. The app's automated updates ensure all users are kept informed in real time, enhancing transparency and reducing administrative effort.
 
+## What you change
+**In Application Property**
+- your_db_name -> use your database name
+- username -> user your mysql username
+- password -> use your mysql password
+
 ## Some Images
 - Index Page
 ![Index Page](https://github.com/kshitijrat/Hostel_Hub/blob/main/screenshots/Screenshot%20(98).png)
