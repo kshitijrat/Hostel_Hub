@@ -45,7 +45,7 @@ public class SecurityConfig {
                                                                 "/admin/register", "/applicationform", "/index","/student_biodata",
                                                                 "/register2", "/admin/approverequest", "/verify-otp","/admin_complaint",
                                                                 "/reset-password", "/complaint", "/about","/notification",
-                                                                "/addbankaccount", "/about", "/contact", "/css/**")
+                                                                "/addbankaccount", "/about", "/contact", "/css/**", "/js/**", "/images/**", "/static/**")
                                                 .permitAll()
                                                 .anyRequest().authenticated())
                                 .csrf(csrf -> csrf

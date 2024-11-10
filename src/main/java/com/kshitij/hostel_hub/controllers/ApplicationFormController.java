@@ -54,6 +54,8 @@ public class ApplicationFormController {
             Model model) {
         System.out.println("Runnnnnn Application Form(/register2) register new student hostel form***************");
         User user = userRepo.findUserByUserEmail(email);
+        
+        // user ko register ke time hi email se registe krwaya tha is liye check kiya ki ye vahi user hai ya nhi
         if (user == null) {
             System.out.println("User is null");
             System.out.println("User: " + user);
@@ -93,6 +95,7 @@ public class ApplicationFormController {
         changes.setType("Admin");
         changesRepo.save(changes);
 
+        model.addAttribute("success", "User Register Successful!");
         return "redirect:/dashboard";
     }
 

@@ -254,7 +254,11 @@
     <!-- Main Content -->
     <main class="main-content">
         <div class="container">
-            <h1 class="section-title">Welcome, <span th:text="${user.userName}"></span></h1>
+            <h1 class="section-title">
+                Welcome, 
+                <span th:if="${user.userName != null}" th:text="${user.userName}"></span>
+                <span th:unless="${user.userName != null}">User</span>
+            </h1>
 
             <div class="row">
                 <div class="col-md-4">

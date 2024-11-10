@@ -51,12 +51,12 @@ public class UserController {
         // form
         System.out.println("Run usercontroller****************************");
         if ("ROLE_USER".equals(role)) {
+
             return "redirect:/applicationform";
         }
         redirectAttributes.addFlashAttribute("user", user);
 
         return "redirect:/dashboard_admin";
-        // Ensure this path is correct
     }
 
     @GetMapping("/editstudent/{id}")

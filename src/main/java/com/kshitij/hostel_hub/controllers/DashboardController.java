@@ -90,6 +90,7 @@ public class DashboardController {
                 return "dashboard"; // Normal user dashboard
             }
         }
+        
         System.out.println("Error::::::::::::::");
         return "redirect:/index";
     }

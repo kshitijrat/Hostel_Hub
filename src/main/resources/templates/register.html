@@ -23,7 +23,7 @@
 
         .hero-section {
             position: relative;
-            background-image: url('https://images.pexels.com/photos/1181411/pexels-photo-1181411.jpeg');
+            background-image: url("/images/bg.jpeg");
             background-size: cover;
             background-position: center;
             height: 100vh;
@@ -117,6 +117,12 @@
             font-size: 0.875rem;
         }
 
+        .password-error {
+            color: red;
+            font-size: 0.875rem;
+            display: none;
+        }
+
         @media (max-width: 768px) {
             .hero-content {
                 padding: 20px;
@@ -151,6 +157,7 @@
                 <div class="form-group">
                     <label for="retypePassword"><i class="fas fa-lock"></i> Re-type Password</label>
                     <input type="password" class="form-control" id="retypePassword" placeholder="Re-type your password" required>
+                    <div id="passwordError" class="password-error">Passwords do not match</div>
                 </div>
                 <div class="form-check">
                     <input type="checkbox" class="form-check-input" id="isAdmin" name="role">
@@ -190,6 +197,9 @@
             const adminIdInput = document.getElementById('adminId');
             const staffIdError = document.getElementById('staffIdError');
             const registerForm = document.getElementById('registerForm');
+            const userPassword = document.getElementById('userPassword');
+            const retypePassword = document.getElementById('retypePassword');
+            const passwordError = document.getElementById('passwordError');
 
             const validStaffIds = [101, 102, 103, 104]; // Define valid staff IDs
 
@@ -208,18 +218,42 @@
             // Initialize visibility based on current checkbox state
             toggleAdminIdField();
 
+            // Password match validation
+            function checkPasswordMatch() {
+                if (userPassword.value !== retypePassword.value) {
+                    passwordError.style.display = 'block';
+                    return false;
+                } else {
+                    passwordError.style.display = 'none';
+                    return true;
+                }
+            }
+
             // Form validation on submit
             registerForm.addEventListener('submit', function (e) {
+                let valid = true;
                 if (isAdminCheckbox.checked) {
                     const staffId = parseInt(adminIdInput.value, 10);
                     if (!validStaffIds.includes(staffId)) {
                         staffIdError.style.display = 'block'; // Show error message
-                        e.preventDefault(); // Prevent form submission
+                        valid = false;
                     } else {
                         staffIdError.style.display = 'none'; // Hide error if valid
                     }
                 }
+
+                // Prevent submission if passwords do not match
+                if (!checkPasswordMatch()) {
+                    valid = false;
+                }
+
+                if (!valid) {
+                    e.preventDefault(); // Prevent form submission if invalid
+                }
             });
+
+            // Check password match on typing in the retype password field
+            retypePassword.addEventListener('input', checkPasswordMatch);
         });
     </script>
 </body>
