@@ -42,15 +42,15 @@ public class SecurityConfig {
                                                 // .requestMatchers("/admin/editstudent/**", "/admin/deletestudent/**").hasRole("ADMIN")
                                                 .requestMatchers("/register", "/requestformadmin", "/apply-room",
                                                                 "/gallery", "/manage_hostel", "/privacy","/terms_of_services","/admin/complaintrequest",
-                                                                "/admin/register", "/applicationform", "/index","/student_biodata",
+                                                                "/admin/register", "/applicationform", "/index","/student_biodata","/checkout",
                                                                 "/register2", "/admin/approverequest", "/verify-otp","/admin_complaint",
                                                                 "/reset-password", "/complaint", "/about","/notification",
                                                                 "/addbankaccount", "/about", "/contact", "/css/**", "/js/**", "/images/**", "/static/**")
                                                 .permitAll()
                                                 .anyRequest().authenticated())
                                 .csrf(csrf -> csrf
-                                                .ignoringRequestMatchers("/admin/register", "/forgot-password",
-                                                                "/feedbackform", "/apply-room", "/submit_complaint","/admin/complaintrequest",
+                                                .ignoringRequestMatchers("/admin/register", "/forgot-password","/review_form", "/submit_username", "/approve_checkout",
+                                                                "/feedbackform", "/apply-room", "/submit_complaint","/admin/complaintrequest","/checkoutrequest",
                                                                 "/applicationform", "/admin/approverequest","/logout",
                                                                 "/addbankaccount"))
                                 .formLogin(formLogin -> formLogin

@@ -2,6 +2,7 @@ package com.kshitij.hostel_hub.controllers;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -61,7 +62,6 @@ public class MyRoomController {
 
     @PostMapping("/apply-room")
     public String applyRoom(@RequestParam("hostelNumber") String hostelNumber,
-            @RequestParam("roomNo")String roomNo,
             @RequestParam("gender")String gender,
             Authentication authentication, RedirectAttributes redirectAttributes) {
         User user = userRepo.findUserByUserEmail(authentication.getName());
@@ -71,19 +71,67 @@ public class MyRoomController {
         
         if (room == null) {
             room = new MyRoom();
+            room.setUser(user);
         }else{
             System.out.println("Room not null**************************");
-            redirectAttributes.addFlashAttribute("warning", "Room is already applied.");
+            redirectAttributes.addFlashAttribute("warning", "Warning! Your can't apply for more then one room.");
             return "redirect:/myroom";
         }
-        room.setRoomNumber(roomNo);
+        //set last hostel
+        char c = hostelNumber.charAt(hostelNumber.length() - 1);
+        int hostelNo = c - '0';
+        int roomNumber = myRoomService.lastRoomThroughHostel(hostelNo);
+        System.out.println("hostel Number: "+hostelNo);
+        System.out.println("last room no + 1: "+roomNumber);
+        //set bookingId
+        Random random = new Random();
+        int x = random.nextInt(10, 100);
+        int y = random.nextInt(101, 200);
+        String bookingId = "BKNo" + x + "Id" + y;
+        
+        room.setRoomNumber(roomNumber+"");
         room.setDate(currDate());
+        room.setBookingId(bookingId);
         room.setRoomType("Single");
         room.setStatus("Pending");
         user.setGender(gender);
         room.setUser(user);
         myRoomRepo.save(room);
+
+        // update rom number in user
+        user.setRoomNumber(roomNumber+"");
+        user.setMyRoom(room);
+        userRepo.save(user);
         redirectAttributes.addFlashAttribute("room", room);
+        return "redirect:/myroom";
+    }
+
+
+    //remove my booking
+    @PostMapping("/removemybooking")
+    public String removeMyBooking(Authentication authentication, RedirectAttributes redirectAttribute){
+        System.out.println("Remove my booking in My room........................");
+        System.out.println("email is: "+authentication.getName());
+        User user = userRepo.findUserByUserEmail(authentication.getName());
+        MyRoom myRoom = myRoomRepo.findMyRoomByUser(user);
+        if(myRoom.getStatus().equalsIgnoreCase("occupied")){
+           redirectAttribute.addFlashAttribute("errorMessage", "You can cancel the booking only while the status is pending!");
+        
+        }else{
+            try{
+                //set room number deleted
+                user.setRoomNumber("---");
+                if(user.getMyRoom() == null)user.setMyRoom(myRoom);
+                user.setMyRoom(null);
+                userRepo.save(user);
+                // delete room
+                myRoomRepo.deleteById(myRoom.getId());
+                redirectAttribute.addFlashAttribute("successMessage", "Booking Delete Successful!");
+            }catch(Exception e){
+                redirectAttribute.addFlashAttribute("errorMessage","Something went wrong!");
+            }
+        }
+        
         return "redirect:/myroom";
     }
 

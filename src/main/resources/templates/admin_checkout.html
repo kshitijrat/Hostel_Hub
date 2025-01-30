@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout Requests - Stay Manager</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            padding-top: 56px;
+            background-color: rgb(0, 0, 4);
+            color: #ffffff;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #a44b3c;
+            padding-bottom: 10px;
+            color: #a44b3c;
+        }
+
+        .table thead th {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .btn-custom {
+            background-color: #a44b3c;
+            color: #ffffff !important;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-custom:hover {
+            background-color: #8a3a33;
+            color: #ffffff !important;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <a class="navbar-brand" href="#">Stay Manager</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a style="color: white;" class="nav-link" href="#" data-toggle="modal" data-target="#logoutModal">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container" style="color: black;">
+            <h1 class="section-title">Checkout Requests</h1>
+            <div th:if="${successMessage}" class="alert alert-success" role="alert"
+                            th:text="${successMessage}"></div>
+                        <div th:if="${errorMessage}" class="alert alert-danger" role="alert" th:text="${errorMessage}">
+                        </div>
+            <form action="/approve_checkout" method="post" class="card p-4 mb-4">
+            <table class="table table-striped" style="color: #111010;">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Student Name</th>
+                        <th>Room Number</th>
+                        <th>Checkout Date</th>
+                        <th>Reason</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Sample row, replace with Thymeleaf iteration to display actual requests -->
+                    <tr th:each="request, stat : ${checkoutRequests}">
+                        <td th:text="${stat.count}"></td>
+                        <input type="email" readonly hidden name="email" th:value="${request.user.userEmail}">
+                        <td th:text="${request.user != null ? request.user.userName : 'N/A'}">John Doe</td>
+                        <td th:text="${request.room.roomNumber}">101</td>
+                        <input type="text" readonly hidden name="roomNo" th:value="${request.room.roomNumber}">
+                        <td th:text="${request.checkoutRequestDate}">2024-11-13</td>
+                        <td th:text="${request.reason}">Moving to a new city</td>
+                        <td>
+                            <button type="submit" class="btn btn-custom">Approve</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+        </div>
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

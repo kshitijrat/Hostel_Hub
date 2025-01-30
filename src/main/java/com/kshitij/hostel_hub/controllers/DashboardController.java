@@ -13,12 +13,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.kshitij.hostel_hub.entities.Complaint;
 import com.kshitij.hostel_hub.entities.MyRoom;
+import com.kshitij.hostel_hub.entities.Review;
 import com.kshitij.hostel_hub.entities.User;
 import com.kshitij.hostel_hub.repo.ComplaintRepo;
 import com.kshitij.hostel_hub.repo.MyRoomRepo;
+import com.kshitij.hostel_hub.repo.ReviewRepo;
 import com.kshitij.hostel_hub.repo.UserRepo;
 import com.kshitij.hostel_hub.services.ChangesServices;
 import com.kshitij.hostel_hub.services.ComplaintService;
+import com.kshitij.hostel_hub.services.ReviewService;
 
 
 
@@ -39,6 +42,12 @@ public class DashboardController {
 
     @Autowired
     private ComplaintService complaintService;
+
+    @Autowired
+    private ReviewService reviewService;
+
+    @Autowired
+    private ReviewRepo reviewRepo;
 
 
     @GetMapping("/dashboard")
@@ -77,7 +86,15 @@ public class DashboardController {
                     List<Complaint> complaints = complaintRepo.findAll();
                     model.addAttribute("newComplaint", complaints);
                 }
-                
+                // System.out.println("user name is: "+user.getUserName());
+                System.out.println("User info \n"+user.toString());
+
+                // review info send using model
+                String lastMessage = reviewService.getLastReview();                
+                float avgRating = reviewService.getAvgRating();
+                model.addAttribute("lastMessage", lastMessage);
+                model.addAttribute("avgRating", avgRating);
+                model.addAttribute("date", reviewService.getLastDate());
                 return "dashboard_admin"; // Admin dashboard
             } else {
                 //update change notifi show
@@ -86,7 +103,13 @@ public class DashboardController {
                 }
 
                 model.addAttribute("user", user);
-                model.addAttribute("bookingId", myRoomRepo.findMyRoomByUser(user).getBookingId());
+               try{
+                String bookingId = myRoomRepo.findMyRoomByUser(user).getBookingId();
+                model.addAttribute("bookingId", bookingId);
+               }catch(Exception e){
+                System.out.println(e.getLocalizedMessage());
+                model.addAttribute("bookingId", "NULL");
+               }
                 return "dashboard"; // Normal user dashboard
             }
         }

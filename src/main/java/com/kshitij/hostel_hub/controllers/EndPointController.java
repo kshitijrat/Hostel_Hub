@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kshitij.hostel_hub.entities.BankAccount;
 import com.kshitij.hostel_hub.entities.Changes;
+import com.kshitij.hostel_hub.entities.Checkout;
 import com.kshitij.hostel_hub.entities.Complaint;
 import com.kshitij.hostel_hub.entities.MyRoom;
 import com.kshitij.hostel_hub.entities.Payment;
@@ -21,6 +23,7 @@ import com.kshitij.hostel_hub.repo.PaymentRepo;
 import com.kshitij.hostel_hub.repo.UserRepo;
 import com.kshitij.hostel_hub.services.BankAccountService;
 import com.kshitij.hostel_hub.services.ChangesServices;
+import com.kshitij.hostel_hub.services.CheckoutService;
 import com.kshitij.hostel_hub.services.ComplaintService;
 import com.kshitij.hostel_hub.services.MyRoomService;
 import com.kshitij.hostel_hub.services.UserService;
@@ -48,6 +51,11 @@ public class EndPointController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UserRepo userRepo;
+    
+    @Autowired
+    private CheckoutService checkoutService;
 
     @Autowired
     private ComplaintService complaintService;
@@ -150,13 +158,14 @@ public class EndPointController {
 
     @GetMapping("/requestformadmin")
     public String showRequestForm(Authentication authentication, Model model) {
+        System.out.println("Enter in request for admin******************");
         List<User> userList = myRoomService.getPendingRequestUser();
         List<MyRoom> myRoomsList = myRoomRepo.findByStatus("Pending");
         model.addAttribute("myRoomList", myRoomsList);
         model.addAttribute("userList", userList);
         int max = Math.max(userList.size(), myRoomsList.size());
         model.addAttribute("max", max);
-        System.out.println("Enter in request for admin******************");
+        
         return "requestformadmin";
     }
 
@@ -276,4 +285,23 @@ public class EndPointController {
         return "admin_complaint";
     }
 
+    @GetMapping("/review")
+    public String showReviewPage(){
+        System.out.println("Review Page Show**********************");
+        return "review";
+    }
+
+    @GetMapping("/checkout")
+    public String showCheckOutRequestPage(){
+        System.out.println("Enter in check out request page............");
+        return "checkout";
+    }
+
+    @GetMapping("/admin_checkout")
+    public String showAdminCheckout(Model model){
+        System.out.println("Enter in Admin checkout.............");
+        List<Checkout> list = checkoutService.getpendingCheckoutList();
+        model.addAttribute("checkoutRequests", list);
+        return "admin_checkout";
+    }
 }

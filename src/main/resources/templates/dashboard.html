@@ -255,7 +255,7 @@
     <main class="main-content">
         <div class="container">
             <h1 class="section-title">
-                Welcome, 
+                Welcome,
                 <span th:if="${user.userName != null}" th:text="${user.userName}"></span>
                 <span th:unless="${user.userName != null}">User</span>
             </h1>
@@ -272,6 +272,8 @@
                                 <h5 class="mb-1">My Room</h5>
                                 <p>Room Number: <span th:text="${user.roomNumber}"></span><br>Room Type: <span
                                         th:text="${user.roomType}"></span></p>
+                                <a href="/checkout" class="btn btn-custom mt-2">Checkout</a>
+
                             </div>
                         </div>
                     </div>
@@ -286,46 +288,13 @@
                             </div>
                             <div>
                                 <h5 class="mb-1"></h5>
-                                <p>Booking Id: <span th:text="${bookingId}"></span><br>Check your upcoming
-                                    booking.</p>
+                                <p>Booking Id: <span
+                                        th:text="${bookingId != null ? bookingId : 'NULL'}"></span><br>Check your
+                                    upcoming booking.</p>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="col-md-4">
-                    <div class="info-box">
-                        <div class="info-content">
-                            <div class="info-icon">
-                                <img src="https://cdn-icons-png.flaticon.com/512/206/206380.png" alt="Support Icon"
-                                    width="40" height="40">
-                            </div>
-                            <div>
-                                <h5 class="mb-1">Support</h5>
-                                <p>Get help and support for any issues.</p>
-                                <a href="mailto:kshitijratnawat@gmail.com" class="btn btn-custom">Contact Support</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Additional Info Boxes -->
-                <div class="col-md-4">
-                    <div class="info-box">
-                        <div class="info-content">
-                            <div class="info-icon">
-                                <img src="https://cdn-icons-png.flaticon.com/512/1160/1160041.png" alt="Complaint Icon"
-                                    width="40" height="40">
-                            </div>
-                            <div>
-                                <h5 class="mb-1">Complaint</h5>
-                                <p>File and track your complaints regarding any hostel-related issues.</p>
-                                <a href="/complaint" class="btn btn-custom">Complaint</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
 
                 <div class="col-md-4">
                     <a href="/notification" style="text-decoration: none; color: inherit;">
@@ -348,22 +317,57 @@
                     </a>
                 </div>
 
+                <!-- Additional Info Boxes -->
+                <div class="col-md-4">
+                    <div class="info-box">
+                        <div class="info-content">
+                            <div class="info-icon">
+                                <img src="https://cdn-icons-png.flaticon.com/512/1160/1160041.png" alt="Complaint Icon"
+                                    width="40" height="40">
+                            </div>
+                            <div>
+                                <h5 class="mb-1">Complaint</h5>
+                                <p>File and track your complaints regarding any hostel-related issues.</p>
+                                <a href="/complaint" class="btn btn-custom">Complaint</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
 
                 <div class="col-md-4">
                     <div class="info-box">
                         <div class="info-content">
                             <div class="info-icon">
-                                <img src="https://cdn-icons-png.flaticon.com/512/3847/3847648.png" alt="Feedback Icon"
+                                <img src="https://cdn-icons-png.flaticon.com/512/206/206380.png" alt="Support Icon"
                                     width="40" height="40">
                             </div>
                             <div>
-                                <h5 class="mb-1">Feedback</h5>
-                                <p>Your feedback is valuable to us. Let us know how we're doing!</p>
+                                <h5 class="mb-1">Support</h5>
+                                <p>Get help and support for any issues.</p>
+                                <a href="mailto:kshitijratnawat@gmail.com" class="btn btn-custom">Contact Support</a>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <div class="col-md-4">
+                    <a href="/review" style="text-decoration: none; color: inherit;">
+                        <div class="info-box">
+                            <div class="info-content">
+                                <div class="info-icon">
+                                    <img src="https://cdn-icons-png.flaticon.com/512/616/616489.png"
+                                        alt="Review & Rate Icon" width="40" height="40">
+                                </div>
+                                <div>
+                                    <h5 class="mb-1">Review & Rate Us</h5>
+                                    <p>Your review matters to us.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
 
             </div>
         </div>

@@ -231,7 +231,21 @@
     <main class="main-content">
         <div class="container">
             <h1 class="section-title">My Room Details</h1>
-
+            <div th:if="${successMessage}" class="alert alert-success" role="alert"
+                th:text="${successMessage}"></div>
+            <div th:if="${errorMessage}" class="alert alert-danger" role="alert" th:text="${errorMessage}">
+            </div>
+            <div class="row">
+                <div class="col-md-12" style="padding: 10px;">
+                    <h3>Remove Booking</h3>
+                    <form th:action="@{/removemybooking}" method="post"
+                    onsubmit="return confirm('Are you sure you want to remove this booking?');">
+                    <button type="submit" class="btn btn-danger btn-sm">
+                        <i class="fas fa-trash"></i> Delete
+                    </button>
+                </form>
+                </div>
+            </div>
             <!-- Check for warning attribute -->
             <div th:if="${warning != null}" class="alert alert-warning" role="alert">
                 <span th:text="${warning}"></span>
@@ -307,11 +321,11 @@
                             </select>
                         </div>
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label for="roomNo">Room Number:</label>
                             <input class="form-control" type="text" name="roomNo" id="roomNo"
                                 placeholder="Enter Room No" required>
-                        </div>
+                        </div> -->
 
                         <button type="submit" class="btn btn-primary">Submit Application</button>
                     </form>
@@ -359,6 +373,32 @@
             </div>
         </div>
     </main>
+
+    <!-- Modal Dialog for Remove Booking -->
+    <div class="modal fade" id="removeBookingModal" tabindex="-1" role="dialog"
+        aria-labelledby="removeBookingModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="removeBookingModalLabel">Confirm Removal</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to remove this booking? This action cannot be undone.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <!-- Form to remove booking -->
+                    <form action="/removebooking" method="post">
+                        <button type="submit" class="btn btn-danger">Remove</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <!-- Logout Modal -->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel"

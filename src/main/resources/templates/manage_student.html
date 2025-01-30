@@ -189,10 +189,22 @@
         <main class="main-content flex-fill">
             <div class="container">
                 <h1 class="mb-4">Manage Students</h1>
-    
+                <div th:if="${successMessage}" class="alert alert-success" role="alert"
+                th:text="${successMessage}"></div>
+            <div th:if="${errorMessage}" class="alert alert-danger" role="alert" th:text="${errorMessage}">
+            </div>
                 <div class="row">
                     <div class="col-md-12 add-student-btn">
-                        <a href="/addstudent" class="btn btn-custom"><i class="fas fa-plus"></i> Add New Student</a>
+                        <!-- <form th:action="@{/admin/addstudent}" method="post">
+                            <button type="submit" class="btn btn-custom">
+                                <i class="fas fa-plus"></i> Add New Student
+                            </button>
+                        </form> -->
+                        <div class="container">
+                            <button onclick="openAddStudentModal()" class="btn btn-custom">
+                                <i class="fas fa-plus"></i> Add New Student
+                            </button>
+                        </div>
                     </div>
                 </div>
     
@@ -212,6 +224,7 @@
                                                 <th>Email</th>
                                                 <th>Phone</th>
                                                 <th>Room</th>
+                                                <th>Action</th>
                                                 <!-- <th>Actions</th> -->
                                             </tr>
                                         </thead>
@@ -223,14 +236,14 @@
                                                 <td th:text="${student.userEmail}"></td>
                                                 <td th:text="${student.userPhone}"></td>
                                                 <td th:text="${student.roomNumber}"></td>
-                                                <!-- <td>
-                                                    <form action="@{/admin/editstudent/{id}(id=${student.id})}" method="post">
-                                                        <button type="submit" class="btn-delete"><i class="fas fa-edit"></i></button>
+                                                <td>
+                                                    <form th:action="@{/admin/deletestudent/{id}(id=${student.id})}" method="post"
+                                                        onsubmit="return confirm('Are you sure you want to delete this booking?');">
+                                                        <button type="submit" class="btn btn-danger btn-sm">
+                                                            <i class="fas fa-trash"></i> Delete
+                                                        </button>
                                                     </form>
-                                                    <form action="@{/admin/deletestudent/{id}(id=${student.id})}" method="post">
-                                                        <button type="submit" class="btn-delete"><i class="fas fa-trash-alt"></i></button>
-                                                    </form>                                                    
-                                                </td> -->
+                                                </td>
                                             </tr>
                                             
                                         </tbody>
@@ -245,6 +258,55 @@
         </main>
     </div>
 
+     <!-- Add New Student Modal -->
+     <div class="modal fade" id="addStudentModal" tabindex="-1" aria-labelledby="addStudentModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addStudentModalLabel">Add New Student</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form th:action="@{/admin/addstudent}" method="post">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="userName" style="color: black;">Email</label>
+                            <input type="text" class="form-control" id="userName" name="userEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="userName" style="color: black;">Name</label>
+                            <input type="text" class="form-control" id="userName" name="userName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="userPhone" style="color: black;">Phone</label>
+                            <input type="text" class="form-control" maxlength="10" minlength="10" id="userPhone" name="userPhone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="gender" style="color: black;">Gender</label>
+                            <select class="form-control" id="gender" name="gender" onchange="updateHostelOptions()" required>
+                                <option value="">Select Gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="hostelNumber" style="color: black;">Hostel Number</label>
+                            <select class="form-control" id="hostelNumber" name="hostelNumber" required>
+                                <option value="">Select Hostel Number</option>
+                                <!-- Options will be added dynamically based on gender -->
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save Student</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="footer">
         <p>&copy; 2024 StaySmart. All rights reserved.</p>
@@ -256,6 +318,35 @@
     </footer>
 
     <!-- Scripts -->
+    <script>
+        // Function to open the Add Student Modal
+        function openAddStudentModal() {
+            $('#addStudentModal').modal('show');
+        }
+
+        // Function to update hostel options based on selected gender
+        function updateHostelOptions() {
+            const gender = document.getElementById('gender').value;
+            const hostelSelect = document.getElementById('hostelNumber');
+            hostelSelect.innerHTML = ''; // Clear current options
+
+            let hostelOptions = [];
+            if (gender === 'male') {
+                hostelOptions = [1, 2, 3, 5, 6, 8, 9];
+            } else if (gender === 'female') {
+                hostelOptions = [4, 7];
+            }
+
+            // Add options to the hostel select
+            hostelOptions.forEach((hostel) => {
+                const option = document.createElement('option');
+                option.value = hostel;
+                option.textContent = hostel;
+                hostelSelect.appendChild(option);
+            });
+        }
+    </script>
+
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

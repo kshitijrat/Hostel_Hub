@@ -16,6 +16,17 @@
             font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
         }
 
+        .badge-success {
+            background-color: #28a745;
+            color: white;
+            padding: 0.2em 0.5em;
+            font-weight: bold;
+            font-size: 0.7em;
+            line-height: 1;
+            border-radius: 50%;
+        }
+
+
         .noti_div {
             background-image: url("https://cdn-icons-png.flaticon.com/128/14026/14026986.png");
             border-radius: 50%;
@@ -213,6 +224,7 @@
             /* Ensure text color remains white on hover */
         }
     </style>
+
 </head>
 
 <body>
@@ -250,9 +262,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="/manage_bookings"><i class="fas fa-calendar-alt"></i> Manage Bookings</a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link" href="/manage_hostel"><i class="fas fa-calendar-alt"></i> Manage Hostel</a>
-            </li>
+            </li> -->
             <li class="nav-item">
                 <a class="nav-link" href="/admin_setting"><i class="fas fa-cogs"></i> Settings</a>
             </li>
@@ -262,23 +274,8 @@
     <!-- Main Content -->
     <main class="main-content">
         <div class="container">
-            <h1 class="section-title">Welcome, <span th:text="${user.userEmail}"></span></h1>
-
+            <h1 class="section-title">Welcome <span th:text="${user.userName}"></span></h1>
             <div class="row">
-                <div class="col-md-4">
-                    <div class="info-box">
-                        <div class="info-content">
-                            <div class="info-icon">
-                                <img src="https://cdn-icons-png.flaticon.com/512/3483/3483224.png"
-                                    alt="Total Students Icon" width="40" height="40">
-                            </div>
-                            <div>
-                                <h5 class="mb-1">Total Students</h5>
-                                <p>Currently live in the hostel: <span th:text="${totalStudents}"></span></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
                 <div class="col-md-4">
                     <div class="info-box">
@@ -321,8 +318,10 @@
                         <div class="info-box">
                             <div class="info-content">
                                 <div class="info-icon">
-                                    <img src="https://cdn-icons-png.flaticon.com/512/1828/1828427.png" alt="Complaints Icon" width="40" height="40">
-                                    <div class="noti_div" id="complaintDiv" th:style="${newComplaint != null ? 'display: block;' : 'display: none;'}">
+                                    <img src="https://cdn-icons-png.flaticon.com/512/1828/1828427.png"
+                                        alt="Complaints Icon" width="40" height="40">
+                                    <div class="noti_div" id="complaintDiv"
+                                        th:style="${newComplaint != null ? 'display: block;' : 'display: none;'}">
                                     </div>
                                 </div>
                                 <div>
@@ -333,7 +332,7 @@
                         </div>
                     </a>
                 </div>
-                
+
                 <div class="col-md-4">
                     <div class="info-box">
                         <div class="info-content">
@@ -349,7 +348,34 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="col-md-4">
+                    <div class="info-box">
+                        <div class="info-content">
+                            <div class="info-icon">
+                                <img src="https://cdn-icons-png.flaticon.com/512/3483/3483224.png"
+                                    alt="User Review Icon" width="40" height="40">
+                            </div>
+                            <div>
+                                <h5 class="mb-1">User Review and Rating</h5>
+                                <p>Average Rating:&nbsp;<span th:text="${avgRating}"></span> / 5</p>
+                                <small style="color: #a9a9a9;">
+                                    <span style="font-size: 15px;" th:text="${lastMessage}"></span>...
+                                    <span th:text="${date}"
+                                        style="float: right; font-size: 1em; color: #a9a9a9;"></span>
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
+            <!-- check out reqeuest  -->
+            <a class="nav-link" href="/admin_checkout">
+                <i class="fas fa-door-open"></i> Checkout Requests
+                <span th:if="${newCheckoutRequests}" class="badge badge-success position-absolute"
+                    style="top: 0; right: -8px; font-size: 0.8em; border-radius: 50%;">NEW</span>
+            </a>
 
             <!-- recent activity  -->
             <div class="row">
@@ -387,6 +413,42 @@
             </div>
         </div>
     </main>
+
+    <!-- username alert model  -->
+    <div class="modal fade" id="usernameModal" tabindex="-1" role="dialog" aria-labelledby="usernameModalLabel"
+        aria-hidden="true" th:if="${user.userName == null or user.userName == ''}">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 style="color: black;" class="modal-title" id="usernameModalLabel">Enter Your Username</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="usernameForm" th:action="@{/submit_username}" method="post">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label style="color: black;" for="usernameInput">Username</label>
+                            <input type="text" style="color: black;" class="form-control" id="usernameInput"
+                                name="username" required>
+                        </div>
+                        <div class="form-group">
+                            <label style="color: black;" for="phoneInput">Phone Number</label>
+                            <input type="tel" style="color: black;" class="form-control" id="phoneInput" name="phone"
+                                pattern="\d{10}" minlength="10" maxlength="10" required>
+                            <small style="color: black;" id="phoneHelp" class="form-text text-muted">Enter a 10-digit
+                                phone number.</small>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-custom">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 
     <!-- Footer -->
     <footer class="footer">
@@ -437,6 +499,19 @@
             sidebar.classList.toggle('open');
         });
     </script>
+
+    <!-- <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Check if the user username is null or empty using Thymeleaf
+            const userName = /*[[${user.userName}]]*/ '';
+            if (!userName || userName.trim() === '') {
+                // Show the modal if the username is null or empty
+                $('#usernameModal').modal('show');
+            }
+        });
+
+    </script> -->
+
 </body>
 
 </html>

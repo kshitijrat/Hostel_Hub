@@ -1,6 +1,7 @@
 package com.kshitij.hostel_hub.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,6 +11,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
 @Entity
 public class User {
@@ -41,6 +43,10 @@ public class User {
     private int hostelNumber;
 
     private String gender;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval=true)
+    @JoinColumn(name = "my_room_id")
+    private MyRoom myRoom;
     
 
     @Transient
