@@ -1,47 +1,46 @@
 # Hostel Hub
 
-**Hostel Hub** is a hostel management application designed to streamline hostel operations, from room allocation to student management.
-
-## Technologies Used
-- **Backend**: Java (Spring Framework - MVC, Hibernate(ORM), Security)
-- **Frontend**: HTML, CSS, JavaScript
-- **Build Tool**: Maven
-- **Database**: MySQL
+A comprehensive web application for managing hostel operations, including room allocation, student management, booking management, and reporting.
 
 ## Features
-1. **Student Registration and Management**
-2. **Room Allocation**
-3. **Booking Management**
-4. **Admin Dashboard**
-5. **Auto Generate Report**
 
-## How It Works
-- Administrators log in to manage room assignments, update resident records, and oversee stay operations. Staff and residents can access relevant information based on their roles, like checking room availability, submitting requests, and viewing billing details. The app's automated updates ensure all users are kept informed in real time, enhancing transparency and reducing administrative effort.
+- **User Authentication and Authorization**: Secure login for both admin and student roles with role-based access control using Spring Security.
+- **Student Registration and Management**: Register and manage student details, including booking history and fee status.
+- **Room Allocation**: Admins can allocate rooms to students based on availability.
+- **Booking Management**: Manage and track room bookings and booking status.
+- **Complaint System**: Students can submit complaints, and admins can resolve them.
+- **Auto-generated Reports**: Admins can generate reports for bookings, fees, and complaints.
 
-## What you change
-**In Application Property**
-- your_db_name -> use your database name
-- username -> user your mysql username
-- password -> use your mysql password
+## Tech Stack
 
-## Some Images
-- Index Page
-![Index Page](https://github.com/kshitijrat/Hostel_Hub/blob/main/screenshots/Screenshot%20(98).png)
+### Backend
+- **Frameworks**: Spring Boot, Hibernate, Spring Security
+- **Database**: MySQL
 
-- User Dashboard
-![User Dashboard](https://github.com/kshitijrat/Hostel_Hub/blob/main/screenshots/Screenshot%20(99).png)
+### Frontend
+- **Languages**: HTML, CSS, JavaScript
+- **Build Tool**: Maven
 
-- Complaint Page
-![Complaint Page](https://github.com/kshitijrat/Hostel_Hub/blob/main/screenshots/Screenshot%20(100).png)
+## Installation
 
-- Report Generated
-![Report](https://github.com/kshitijrat/Hostel_Hub/blob/main/screenshots/Screenshot%20(102).png)
+### Prerequisites
+1. JDK 8 or higher
+2. MySQL
+3. Maven
 
-- Admin Dashboard
-![Admin Dashboard](https://github.com/kshitijrat/Hostel_Hub/blob/main/screenshots/Screenshot%20(103).png)
+### Steps
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/kshitijrat/Hostel_Hub.git
+2. Update application properties with your MySQL credentials
+   ```properties
+     spring.datasource.url=jdbc:mysql://localhost:3306/your_db_name
+     spring.datasource.username=your_mysql_username
+     spring.datasource.password=your_mysql_password
+ 3. Build & Run
+    ```bash
+    mvn spring-boot:run
+4. Access the backend at http://localhost:8080
+  
 
-- Admin Complaint Page
-![Admin Complaint](https://github.com/kshitijrat/Hostel_Hub/blob/main/screenshots/Screenshot%20(104).png)
 
-- Admin Manage Bookings and Student
-![Manage Bookings and Student](https://github.com/kshitijrat/Hostel_Hub/blob/main/screenshots/Screenshot%20(107).png)
